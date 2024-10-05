@@ -1,58 +1,38 @@
-// "use strict"
-let str = "Greetings, ";
-let user = {
-    firstName: "John",
-    lastname: "Smith",
-    display: function () {
-        console.log(str, this.firstName);
-        show("hi");
-    }
-};
-
-user.display();
-
-function show(msg) {
-    // For use strict
-    // console.log(msg + " " + this?.lastname);
-    console.log(msg + " " + this.lastname);
-}
-
-show.call(user, "hello");
 
 ///----------------------------------------------------------////
 class Student {
-    #id
-    #answer
+    #studentId
+    #answers
 
     constructor(id) {
-        this.#id = id
-        this.#answer = []
+        this.#studentId = id
+        this.#answers = []
     }
 
-    get id() {
-        return this.#id
+    get studentId() {
+        return this.#studentId
     }
 
-    get answer() {
-        return this.#answer
+    get answers() {
+        return this.#answers
     }
 
     addAnswer(question) {
-        this.#answer.push(question)
+        this.#answers.push(question)
     }
 }
 
 class Question {
-    #id
+    #qid
     #answer
 
     constructor(id, answer) {
-        this.#id = id
+        this.#qid = id
         this.#answer = answer
     }
 
-    get id() {
-        return this.#id
+    get qid() {
+        return this.#qid
     }
 
     get answer() {
@@ -60,7 +40,7 @@ class Question {
     }
 
     checkAnswer(answer) {
-        this.#answer = answer
+        return this.#answer == answer
     }
 }
 
@@ -69,32 +49,25 @@ class Quiz {
     #students
 
     constructor(questions, students) {
-        this.#questions = new Map()
-        for (let question of questions) {
-            this.#questions.set(question.id, question.answer)
-        }
-
+        this.#questions = new Map(questions.map(q => [q.qid, q.answer]))
         this.#students = students
     }
 
     scoreStudentBySid(sid) {
-        let student = this.#students.find(stu => stu.id == sid)
-        var score = 0
-        for (let answer of student.answer) {
-            if (this.#questions.get(answer.id) == answer.answer) {
-                score++
-            }
-        }
+        let checkingStudent = this.#students.find(stu => stu.studentId == sid)
+        // let score = 0
+        // for (let answer of checkingStudent.answers) {
+        //     let correctAnswer = this.#questions.get(answer.qid)
+        //     if (answer.checkAnswer(correctAnswer)) {
+        //         score++
+        //     }
+        // }
 
-        return score
+        return checkingStudent.answers.reduce((score, ans) => score + ans.checkAnswer(this.#questions.get(ans.qid)), 0)
     }
 
     getAverageScore() {
-        var totalScore = 0
-        for (let student of this.#students) {
-            totalScore += this.scoreStudentBySid(student.id)
-        }
-
+        let totalScore = this.#students.reduce((sum, stu) => sum + this.scoreStudentBySid(stu.studentId), 0)
         if (this.#students.length <= 0) {
             return 0
         }
