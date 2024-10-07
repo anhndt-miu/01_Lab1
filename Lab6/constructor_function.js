@@ -15,7 +15,7 @@ function Quiz(questions, students) {
 }
 
 // Set Prototype
-Object.setPrototypeOf(Student.prototype, Question.prototype, Quiz.prototype)
+// Object.setPrototypeOf(Student.prototype, Question.prototype, Quiz.prototype)
 
 // Define functions
 Student.prototype.studentId = function () {
