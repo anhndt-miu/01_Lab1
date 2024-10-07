@@ -29,12 +29,12 @@ function Meditation(counter) {
 
 // Function
 Meditation.prototype.start = function () {
- let timer =   setInterval(() => {
+    let counterTimer = setInterval(() => {
         if (this.counter > 0) {
             console.log(this.counter)
             this.counter -= 1
         } else {
-            clearInterval(timer)
+            clearInterval(counterTimer)
             console.log("Jay Guru Dev")
         }
     }, 1000)
