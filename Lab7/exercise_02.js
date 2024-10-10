@@ -8,9 +8,17 @@ var isPrime = function (n) {
 }
 
 console.log('start');
-isPrime(7)
-    .then(console.log)
-    .catch(console.error);
+
+/// Update IIFE
+(async () => {
+    try {
+        let res = await isPrime(7)
+        console.log(res)
+    } catch (error) {
+        console.log(error)
+    }
+})();
+
 console.log('end');
 // start
 // end
