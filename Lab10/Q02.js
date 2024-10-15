@@ -6,48 +6,41 @@ app.use(express.urlencoded({extended: true}));
 app.set('port', process.env.PORT || 3000);
 const port = app.get('port');
 
-function extractNumbers(req, res, next) {
-    let {a, b} = req.query || req.body || {};
-    if (isNaN(a) || isNaN(b)) {
-        throw new Error("Invalid numbers")
+function handleOperation(req, res, operation) {
+    const num1 = parseInt(req.query.a || req.params.a || req.body.a);
+    const num2 = parseInt(req.query.b || req.params.b || req.body.b);
+    if (isNaN(num1) || isNaN(num2)) {
+        return res.status(400).json({err: "Invalid or missing numbers"});
     }
 
-    req.a = parseInt(a);
-    req.b = parseInt(b);
-    next();
+    let result;
+    switch (operation) {
+        case 'addition':
+            result = num1 + num2;
+            break;
+        case 'subtraction':
+            result = num1 - num2;
+            break;
+        case 'multiplication':
+            result = num1 * num2;
+            break;
+        case 'division':
+            result = num2 !== 0 ? num1 / num2 : 'Cannot divide by zero';
+            break;
+        case 'modulus':
+            result = num2 !== 0 ? num1 / num2 : 'Cannot divide by zero';
+            break;
+        default:
+            return res.status(400).json({error: 'Invalid operation'});
+    }
+
+    res.json({result: result});
 }
 
-app.all('/addition', extractNumbers, (req, res) => {
-    res.json({result: req.a + req.b});
-});
-
-app.all('/subtraction', extractNumbers, (req, res) => {
-    res.json({result: req.a - req.b});
-});
-
-app.all('/multiplication', extractNumbers, (req, res) => {
-    res.json({result: req.a * req.b});
-});
-
-app.all('/division', extractNumbers, (req, res) => {
-    if (req.b === 0) {
-        throw new Error("Can not division with 0")
-    } else {
-        res.json({result: req.a / req.b});
-    }
-});
-
-app.all('/modulus', extractNumbers, (req, res) => {
-    if (req.b === 0) {
-        throw new Error("Can not modulus with 0")
-    } else {
-        res.json({result: req.a % req.b});
-    }
-});
-
-app.use(function (err, req, res, next) {
-    res.status(400).json({err: err.message});
-});
+['addition', 'subtraction', 'multiplication', 'division', 'modulus'].forEach((operation) => {
+    app.get(`/${operation}/:a?/:b?`, (req, res) => handleOperation(req, res, `${operation}`))
+    app.post(`/${operation}`, (req, res) => handleOperation(req, res, `${operation}`))
+})
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
