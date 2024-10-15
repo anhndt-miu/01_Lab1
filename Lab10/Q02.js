@@ -29,7 +29,7 @@ app.all('/multiplication', extractNumbers, (req, res) => {
     res.json({result: req.a * req.b});
 });
 
-app.all('/division', extractNumbers, (req, res, next) => {
+app.all('/division', extractNumbers, (req, res) => {
     if (req.b === 0) {
         throw new Error("Can not division with 0")
     } else {
