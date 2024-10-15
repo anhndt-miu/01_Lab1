@@ -52,7 +52,7 @@ printOddNumbersOnly2();
 console.log(`1.c.1:`)
 
 function printFibo(n, a, b) {
-    let arr =[];
+    let arr = [];
     let next = 0;
     for (let i = 0; i < n; i++) {
         arr.push(a)
@@ -72,8 +72,8 @@ printFibo(10, 0, 1)
 
 // // Function Expression
 console.log(`1.c.2:`)
-const printFibo1 = function (n,a,b) {
-    let arr =[];
+const printFibo1 = function (n, a, b) {
+    let arr = [];
     let next = 0;
     for (let i = 0; i < n; i++) {
         arr.push(a)
@@ -94,7 +94,7 @@ printFibo1(10, 0, 1)
 // // Arrow Function
 console.log(`1.c.3:`)
 const printFibo2 = (n, a, b) => {
-    let arr =[];
+    let arr = [];
     let next = 0;
     for (let i = 0; i < n; i++) {
         arr.push(a)
