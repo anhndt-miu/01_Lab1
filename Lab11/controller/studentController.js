@@ -23,6 +23,18 @@ const studentController = {
     },
 
     createStudent: (req, res, next) => {
+        const {id, name, program} = req.body
+        if (id && name && program) {
+            const student = new Student(id * 1, name, program)
+            const result = student.createStudent()
+            if (result) {
+                res.status(200).json(result)
+            } else {
+                res.status(400).json({message: "Student id existed"})
+            }
+        } else {
+            res.status(400).json({message: "Provide student data"})
+        }
     },
     getStudentById: (req, res, next) => {
         const id = req.params.id
@@ -55,10 +67,10 @@ const studentController = {
         const id = req.params.id
         if (id) {
             const student = Student.deleteStudent(id)
-            if (student){
-                res.status(200).json({message:"Delete successed"})
-            }else{
-                res.status(400).json({message:"Delete failure"})
+            if (student) {
+                res.status(200).json({message: "Delete successed"})
+            } else {
+                res.status(400).json({message: "Delete failure"})
             }
         } else {
             res.status(400).json({message: "Provide student id"})
