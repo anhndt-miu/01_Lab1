@@ -1,6 +1,17 @@
-import { add, subtract, multiply, divide } from './operation';
+export class Calculator {
+    add(x: number, y: number): number {
+        return x + y
+    }
 
-console.log(add(2, 3))
-console.log(subtract(2, 3))
-console.log(multiply(2, 3))
-console.log(divide(2, 3))
+    subtract(x: number, y: number): number {
+        return x - y
+    }
+
+    multiply(x: number, y: number): number {
+        return x * y
+    }
+
+    divide(x: number, y: number): number {
+        return x == 0 ? 0 : x / y
+    }
+}

@@ -1,15 +1,11 @@
-export function add(x: number, y: number): number {
-    return x + y
+import {Calculator} from './calculator';
+
+function operation(): void {
+    let calc = new Calculator()
+    console.log(calc.add(2, 3))
+    console.log(calc.subtract(2, 3))
+    console.log(calc.multiply(2, 3))
+    console.log(calc.divide(2, 3))
 }
 
-export function subtract(x: number, y: number): number {
-    return x - y
-}
-
-export function multiply(x: number, y: number): number {
-    return x * y
-}
-
-export function divide(x: number, y: number): number {
-    return x == 0 ? 0 : x / y
-}
+operation()
