@@ -8,7 +8,7 @@ class Animal {
     }
 
     run(speed = 0) {
-        this.speed + speed
+        this.speed += speed
         console.log(`${this.name} run with speed ${this.speed}`)
     }
 

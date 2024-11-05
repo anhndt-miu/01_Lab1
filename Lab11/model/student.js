@@ -55,13 +55,13 @@ export default class Student {
     }
 
     static sortBy(field, order) {
-        return Student.getAllStudents().sort((e1, e2) =>
+        return this.getAllStudents().sort((e1, e2) =>
             (typeof e1[field] === 'number') ? order * (e1[field] - e2[field]) : order * e1[field].localeCompare(e2[field])
         )
     }
 
     static sortByIdAndProgram(id, order, program) {
-        return Student.getAllStudents().sort((e1, e2) => {
+        return this.getAllStudents().sort((e1, e2) => {
                 if (e1.program !== e2.program) {
                     return order * e1.program.localeCompare(e2.program)
                 }
